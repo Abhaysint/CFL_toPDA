@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CFL to PDA Conversion</title>
+    <style>
+        /* CSS styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            text-align: center;
+            margin: 50px;
+        }
+
+        #inputForm {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>CFL to PDA Conversion</h1>
+        <form id="inputForm">
+            <label for="cflInput">Enter the Context-Free Language (CFL):</label><br>
+            <input type="text" id="cflInput" name="cflInput">
+            <button type="button" onclick="convert()">Convert</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // JavaScript for handling CFL to PDA conversion
+        function convert() {
+            const cflInput = document.getElementById('cflInput').value;
+
+            // Send CFL input to the server for processing
+            fetch('/convert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cfl: cflInput })
+            })
+                .then(response => response.text())
+                .then(data => displayResult(data));
+        }
+
+        function displayResult(result) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<h2>PDA Result</h2><p>${result}</p>`;
+        }
+    </script>
+</body>
+
+</html>
